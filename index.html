@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Экран и глаза ребёнка: почему высота монитора решает · @ne_cybersec</title>
+<meta name="description" content="Почему у ребёнка сохнут и краснеют глаза за компьютером — и как высота экрана это решает. Интерактивный стенд и разбор по данным офтальмологов. @ne_cybersec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ne_cybersec">
+<meta property="og:title" content="Экран и глаза ребёнка: почему высота монитора решает">
+<meta property="og:description" content="Чаще всего детские глаза сохнут не от яркости, а оттого что экран стоит слишком высоко. Стенд: подвигайте монитор сами.">
+<link rel="canonical" href="https://ne-cybersec.github.io/ekran-i-glaza-rebenka/">
+<style>
+  :root{
+    --ink:#16324F;
+    --ink-soft:#3D5A78;
+    --paper:#F6F4EF;
+    --card:#FFFFFF;
+    --line:#D8D3C8;
+    --good:#3E7C59;
+    --warn:#C98A2B;
+    --bad:#B3402E;
+    --sky:#9FB8CE;
+    --skin:#E8C9A8;
+    --tear:#5A93C4;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:"DejaVu Sans",-apple-system,"Segoe UI",Roboto,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.65;
+    font-size:17px;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:28px 18px 60px}
+  header{padding:26px 0 10px;border-bottom:3px solid var(--ink)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+  .brand{
+    display:inline-flex;align-items:center;gap:7px;text-decoration:none;
+    font-size:13px;font-weight:700;letter-spacing:.02em;color:var(--ink);
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:5px 12px 5px 10px;margin-bottom:14px;
+  }
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--tear);flex:none}
+  .brand:hover{border-color:var(--ink-soft)}
+  .editors{
+    background:var(--card);border:1px solid var(--line);border-left:5px solid var(--tear);
+    padding:16px 18px;margin:34px 0 0;border-radius:8px;
+  }
+  .editors h2{margin:0 0 8px;font-size:17px}
+  .editors p{margin:0;font-size:15px;color:var(--ink-soft)}
+  .editors a{color:var(--tear);font-weight:700;text-decoration:none}
+  .editors a:hover{text-decoration:underline}
+  h1{font-size:clamp(26px,5.5vw,38px);line-height:1.15;margin-top:10px;font-weight:800}
+  .lead{margin-top:14px;font-size:clamp(17px,3.6vw,20px);color:var(--ink-soft)}
+  h2{font-size:clamp(20px,4.5vw,26px);margin:44px 0 12px;font-weight:800}
+  p{margin:12px 0}
+  .num{font-variant-numeric:tabular-nums;font-weight:700}
+  .fact{
+    background:var(--card);border:1px solid var(--line);border-left:5px solid var(--ink);
+    padding:14px 16px;margin:18px 0;border-radius:6px;
+  }
+  .fact b{font-size:22px}
+  .stand{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:16px 12px 18px;margin:22px 0;
+    box-shadow:0 3px 14px rgba(22,50,79,.08);
+  }
+  .stand h3{font-size:18px;margin:0 4px 4px;font-weight:800}
+  .stand .hint{font-size:14px;color:var(--ink-soft);margin:0 4px 10px}
+  .scene{width:100%;touch-action:none;user-select:none;display:block}
+  .drag-target{cursor:grab}
+  .drag-target:active{cursor:grabbing}
+  .readouts{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;
+  }
+  .ro{
+    background:var(--paper);border:1px solid var(--line);border-radius:8px;
+    padding:8px 6px;text-align:center;
+  }
+  .ro .lbl{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft)}
+  .ro .val{font-size:clamp(17px,4.5vw,22px);font-weight:800;font-variant-numeric:tabular-nums}
+  .verdict{
+    margin-top:10px;padding:10px 14px;border-radius:8px;text-align:center;
+    font-weight:700;color:#fff;background:var(--good);transition:background .25s;
+    font-size:clamp(14px,3.8vw,17px);
+  }
+  .slider-row{margin-top:12px;padding:0 4px}
+  input[type=range]{width:100%;accent-color:var(--ink)}
+  .footnote{font-size:12.5px;color:var(--ink-soft);margin-top:10px;padding:0 4px}
+  ul.check{list-style:none;margin:14px 0}
+  ul.check li{
+    padding:9px 0 9px 34px;position:relative;border-bottom:1px dashed var(--line);
+  }
+  ul.check li::before{
+    content:"";position:absolute;left:2px;top:14px;width:18px;height:18px;
+    border:2.5px solid var(--good);border-radius:5px;
+  }
+  ul.check li::after{
+    content:"";position:absolute;left:7px;top:17px;width:8px;height:5px;
+    border-left:2.5px solid var(--good);border-bottom:2.5px solid var(--good);
+    transform:rotate(-45deg);
+  }
+  .rule-card{
+    background:var(--ink);color:#F6F4EF;border-radius:10px;padding:20px 18px;margin:20px 0;
+  }
+  .rule-card b{font-size:clamp(18px,4.5vw,22px)}
+  .rule-card p{color:#C9D6E2;font-size:15px;margin-top:8px}
+  .sources{margin-top:50px;padding-top:16px;border-top:3px solid var(--ink)}
+  .sources h2{margin-top:0;font-size:18px}
+  .sources ol{margin:10px 0 0 20px;font-size:13.5px;color:var(--ink-soft)}
+  .sources li{margin:7px 0;word-break:break-word}
+  .diagram{margin:18px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
+  .diagram svg{width:100%;display:block}
+  .cap{font-size:13px;color:var(--ink-soft);text-align:center;margin-top:6px}
+  @media (max-width:480px){
+    .readouts{grid-template-columns:repeat(3,1fr);gap:5px}
+    .ro{padding:6px 3px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .verdict{transition:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <a class="brand" href="https://t.me/ne_cybersec" target="_blank" rel="noopener"><span class="dot" aria-hidden="true"></span><span>@ne_cybersec</span></a>
+  <div class="kicker">Детская цифровая гигиена</div>
+  <h1>Ребёнок трёт глаза после компьютера? Проверьте высоту экрана</h1>
+  <p class="lead">Не яркость и не «вредное излучение». Чаще всего глаза сохнут из-за того, что экран стоит слишком высоко. Ниже — стенд: подвигайте монитор сами и посмотрите, что делает веко.</p>
+</header>
+
+<h2>Веко работает как крышка</h2>
+<p>Когда мы смотрим вниз, верхнее веко опускается и прикрывает бóльшую часть глаза. Слеза под ним испаряется медленно. Когда смотрим прямо или вверх, глаз распахнут, открытой поверхности больше, слеза высыхает быстро.</p>
+<p>Шведские офтальмологи измерили это в цифрах. При взгляде на 20° вниз глазная щель сужается с <span class="num">9,4</span> до <span class="num">6,7 мм</span>, а слёзная плёнка держится <span class="num">43,5 секунды</span> вместо <span class="num">17,3</span> при взгляде вверх — в два с половиной раза дольше <sup>[1]</sup>.</p>
+
+<div class="fact">
+  За экраном ребёнок моргает <b>7</b> раз в минуту вместо обычных <b>22</b> <sup>[4]</sup>. Слеза и так обновляется редко — высокий экран добивает её окончательно.
+</div>
+
+<h2>Стенд: подвигайте монитор</h2>
+<div class="stand">
+  <h3>Тяните монитор вверх и вниз</h3>
+  <p class="hint">Пальцем на телефоне или мышью. Смотрите на глаз справа и на цифры.</p>
+
+  <svg id="scene" class="scene" viewBox="0 0 720 400" xmlns="http://www.w3.org/2000/svg" aria-label="Интерактивная схема: ребёнок и монитор, высоту которого можно менять">
+    <!-- пол и стол -->
+    <line x1="20" y1="372" x2="700" y2="372" stroke="#D8D3C8" stroke-width="3"/>
+    <rect x="380" y="300" width="300" height="10" rx="3" fill="#3D5A78"/>
+    <rect x="410" y="310" width="12" height="62" fill="#3D5A78"/>
+    <rect x="630" y="310" width="12" height="62" fill="#3D5A78"/>
+
+    <!-- ребёнок: профиль -->
+    <g id="child">
+      <!-- туловище -->
+      <path d="M120 372 L120 300 Q120 268 156 262 L196 258 L196 372 Z" fill="#16324F"/>
+      <!-- шея -->
+      <rect x="160" y="228" width="26" height="40" fill="#E8C9A8"/>
+      <!-- голова -->
+      <circle cx="172" cy="196" r="46" fill="#E8C9A8"/>
+      <!-- волосы -->
+      <path d="M126 190 Q126 146 172 146 Q214 146 218 184 Q200 168 172 168 Q140 170 132 200 Z" fill="#16324F"/>
+      <!-- нос -->
+      <path d="M216 200 q10 6 0 13" fill="none" stroke="#C9A27E" stroke-width="3" stroke-linecap="round"/>
+      <!-- рот -->
+      <path d="M206 224 q8 3 14 0" fill="none" stroke="#B3402E" stroke-width="3" stroke-linecap="round"/>
+      <!-- глаз (профиль): белок + зрачок + веко -->
+      <g id="profileEye">
+        <ellipse cx="200" cy="192" rx="11" ry="8" fill="#fff" stroke="#16324F" stroke-width="1.5"/>
+        <circle id="profilePupil" cx="204" cy="192" r="3.4" fill="#16324F"/>
+        <path id="profileLid" d="M188 186 Q200 180 212 186 L212 186 Q200 180 188 186 Z" fill="#E0BC97"/>
+        <path d="M188 186 Q200 179 212 186" fill="none" stroke="#16324F" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </g>
+
+    <!-- пунктир уровня глаз -->
+    <line id="eyeLevel" x1="214" y1="192" x2="700" y2="192" stroke="#9FB8CE" stroke-width="2" stroke-dasharray="2 7"/>
+    <text x="690" y="184" font-size="12" fill="#3D5A78" text-anchor="end">уровень глаз</text>
+
+    <!-- линия взгляда -->
+    <line id="gazeLine" x1="212" y1="192" x2="520" y2="240" stroke="#B3402E" stroke-width="2.5" stroke-dasharray="8 6" stroke-linecap="round"/>
+
+    <!-- рельса монитора -->
+    <line x1="520" y1="80" x2="520" y2="300" stroke="#D8D3C8" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- монитор (перетаскиваемый) -->
+    <g id="monitor" class="drag-target">
+      <rect id="monBody" x="452" y="200" width="136" height="86" rx="8" fill="#16324F"/>
+      <rect id="monScreen" x="460" y="208" width="120" height="70" rx="4" fill="#9FB8CE"/>
+      <rect id="monStand" x="512" y="286" width="16" height="16" fill="#3D5A78"/>
+      <circle id="monHandle" cx="600" cy="243" r="15" fill="#C98A2B"/>
+      <path id="monArrows" d="M600 234 l-5 6 h10 z M600 252 l-5 -6 h10 z" fill="#fff"/>
+    </g>
+
+    <!-- большой глаз анфас -->
+    <g id="bigEye" transform="translate(300,60)">
+      <text x="60" y="-6" font-size="13" fill="#3D5A78" text-anchor="middle">глаз крупно</text>
+      <clipPath id="apertureClip">
+        <ellipse id="apertureShape" cx="60" cy="46" rx="54" ry="30"/>
+      </clipPath>
+      <!-- кожа вокруг -->
+      <rect x="-6" y="-2" width="132" height="96" rx="18" fill="#E8C9A8"/>
+      <!-- глазное яблоко внутри щели -->
+      <g clip-path="url(#apertureClip)">
+        <rect x="-6" y="-2" width="132" height="96" fill="#fff"/>
+        <circle cx="60" cy="46" r="20" fill="#3D5A78"/>
+        <circle cx="60" cy="46" r="9" fill="#16324F"/>
+        <circle cx="66" cy="40" r="3.5" fill="#fff" opacity=".9"/>
+        <!-- слёзная плёнка -->
+        <rect id="tearFilm" x="-6" y="-2" width="132" height="96" fill="#5A93C4" opacity="0.16"/>
+      </g>
+      <!-- контур щели + ресницы -->
+      <ellipse id="apertureOutline" cx="60" cy="46" rx="54" ry="30" fill="none" stroke="#16324F" stroke-width="3"/>
+      <path id="lashes" d="M14 36 l-8 -7 M34 24 l-6 -9 M60 19 l0 -11 M86 24 l6 -9 M106 36 l8 -7" stroke="#16324F" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  </svg>
+
+  <div class="readouts">
+    <div class="ro"><div class="lbl">Взгляд</div><div class="val" id="roAngle">—</div></div>
+    <div class="ro"><div class="lbl">Веко открыто</div><div class="val" id="roFissure">—</div></div>
+    <div class="ro"><div class="lbl">Слеза держится</div><div class="val" id="roTbut">—</div></div>
+  </div>
+  <div class="verdict" id="verdict">…</div>
+
+  <div class="slider-row">
+    <input type="range" id="monRange" min="0" max="100" value="70" aria-label="Высота монитора">
+  </div>
+  <p class="footnote">Веко: 11,1 мм при взгляде вверх → 9,4 мм прямо → 6,7 мм при 20° вниз; слеза: 17,3 с вверх → 43,5 с при 20° вниз (Pansell, 2007). Промежуточные значения — линейная оценка между измеренными точками, поэтому «≈».</p>
+</div>
+
+<h2>Куда обычно промахиваются</h2>
+<p>Родители чаще ставят экран слишком высоко, а не слишком низко: монитор на подставке «для солидности», ноутбук на стопке книг «чтобы не сутулился». Для осанки логика понятная, для глаз — наоборот. Экран выше глаз заставляет ребёнка смотреть вверх, глаз раскрывается, слеза сохнет. Отсюда покрасневшие глаза, трение кулаками, жалобы «щиплет» к вечеру.</p>
+<p>Ноутбук, стоящий прямо на столе, глазам как раз подходит: взгляд идёт вниз. Проблема ноутбука — шея, и решается она перерывами и посадкой, а не подъёмом экрана к потолку.</p>
+
+<div class="rule-card">
+  <b>Правило одно: верхний край экрана — на уровне глаз ребёнка или чуть ниже.</b>
+  <p>Тогда взгляд в центр экрана сам собой уходит на 15–20° вниз — это зона, которую рекомендуют OSHA и Американская оптометрическая ассоциация, а стандарт ISO 9241-5 считает естественную линию покоя глаз ещё ниже. Сильно ниже тоже не надо: при наклоне взгляда за 30–40° начинает уставать шея <sup>[5]</sup>.</p>
+</div>
+
+<div class="diagram">
+  <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" aria-label="Правильная посадка: верхний край монитора на уровне глаз, взгляд слегка вниз">
+    <line x1="20" y1="232" x2="700" y2="232" stroke="#D8D3C8" stroke-width="3"/>
+    <rect x="360" y="182" width="300" height="9" rx="3" fill="#3D5A78"/>
+    <rect x="388" y="191" width="11" height="41" fill="#3D5A78"/>
+    <rect x="612" y="191" width="11" height="41" fill="#3D5A78"/>
+    <path d="M110 232 L110 186 Q110 162 138 158 L168 155 L168 232 Z" fill="#16324F"/>
+    <rect x="138" y="128" width="22" height="32" fill="#E8C9A8"/>
+    <circle cx="149" cy="104" r="36" fill="#E8C9A8"/>
+    <path d="M113 100 Q113 66 149 66 Q182 66 185 95 Q170 82 149 82 Q124 84 118 106 Z" fill="#16324F"/>
+    <circle cx="171" cy="101" r="4.5" fill="#16324F"/>
+    <path d="M183 106 q8 5 0 10" fill="none" stroke="#C9A27E" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- монитор: верхний край на уровне глаз -->
+    <rect x="470" y="101" width="110" height="74" rx="7" fill="#16324F"/>
+    <rect x="477" y="108" width="96" height="60" rx="3" fill="#9FB8CE"/>
+    <rect x="518" y="175" width="14" height="8" fill="#3D5A78"/>
+    <!-- уровень глаз -->
+    <line x1="176" y1="101" x2="640" y2="101" stroke="#3E7C59" stroke-width="2.5" stroke-dasharray="2 7"/>
+    <!-- взгляд вниз в центр -->
+    <line x1="178" y1="103" x2="525" y2="140" stroke="#3E7C59" stroke-width="2.5" stroke-dasharray="8 6"/>
+    <path d="M240 101 A 64 64 0 0 1 238 116" fill="none" stroke="#3E7C59" stroke-width="2"/>
+    <text x="252" y="118" font-size="14" fill="#3E7C59" font-weight="700">15–20°</text>
+  </svg>
+  <div class="cap">Верхний край — по пунктиру уровня глаз. Взгляд в центр экрана уходит вниз сам.</div>
+</div>
+
+<h2>Пять минут на настройку</h2>
+<ul class="check">
+  <li>Посадите ребёнка как обычно и попросите смотреть прямо перед собой. Взгляд должен упереться в верхний край экрана. Выше — убирайте подставки; ниже — нормально.</li>
+  <li>Расстояние — вытянутая детская рука до экрана, можно чуть больше. Мелко — увеличьте шрифт, а не придвигайте ребёнка.</li>
+  <li>Экран слегка наклоните назад, чтобы он смотрел прямо в лицо, без бликов от люстры и окна.</li>
+  <li>Каждые 20–30 минут — пауза со взглядом в окно, вдаль. Заодно напомните моргнуть несколько раз с закрытыми до конца глазами.</li>
+  <li>Если глаза красные и сухие каждый вечер даже после настройки — к офтальмологу. Стенд выше объясняет механику, но не заменяет осмотр.</li>
+</ul>
+
+<div class="editors">
+  <h2>От редакции @ne_cybersec</h2>
+  <p>Разбираем цифровую гигиену и детскую безопасность без паники и мифов — по измеримым данным. Больше материалов и обсуждение — в нашем канале <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">@ne_cybersec</a>.</p>
+</div>
+
+<div class="sources">
+  <h2>Источники</h2>
+  <ol>
+    <li>Pansell T., Porsblad M., Abdi S. The effect of vertical gaze position on ocular tear film stability. Clinical and Experimental Optometry, 2007, 90(3). doi:10.1111/j.1444-0938.2007.00136.x</li>
+    <li>Sotoyama M., Villanueva M.B., Jonai H., Saito S. Ocular surface area as an informative index of visual ergonomics. Industrial Health, 1995, 33(2), 43–56.</li>
+    <li>Sotoyama M. et al. Analysis of ocular surface area for comfortable VDT workstation layout. Ergonomics, 1996, 39(6), 877–884.</li>
+    <li>Tsubota K., Nakamori K. Dry eyes and video display terminals. New England Journal of Medicine, 1993, 328(8), 584.</li>
+    <li>Turville K.L. et al. The effects of video display terminal height on the operator: a comparison of the 15° and 40° recommendations. Applied Ergonomics, 1998, 29(4), 239–246.</li>
+    <li>OSHA Computer Workstations eTool, раздел Monitors — https://www.osha.gov/etools/computer-workstations/components/monitors</li>
+    <li>ISO 9241-5:1998. Ergonomic requirements for office work with visual display terminals. Part 5: Workstation layout and postural requirements.</li>
+  </ol>
+</div>
+
+</div>
+
+<script>
+(function(){
+  var svg = document.getElementById('scene');
+  var monitor = document.getElementById('monitor');
+  var monBody = document.getElementById('monBody');
+  var monScreen = document.getElementById('monScreen');
+  var monStand = document.getElementById('monStand');
+  var monHandle = document.getElementById('monHandle');
+  var monArrows = document.getElementById('monArrows');
+  var gazeLine = document.getElementById('gazeLine');
+  var aperture = document.getElementById('apertureShape');
+  var apertureOutline = document.getElementById('apertureOutline');
+  var lashes = document.getElementById('lashes');
+  var tearFilm = document.getElementById('tearFilm');
+  var profileLid = document.getElementById('profileLid');
+  var profilePupil = document.getElementById('profilePupil');
+  var roAngle = document.getElementById('roAngle');
+  var roFissure = document.getElementById('roFissure');
+  var roTbut = document.getElementById('roTbut');
+  var verdict = document.getElementById('verdict');
+  var range = document.getElementById('monRange');
+
+  var EYE = {x:212, y:192};
+  var MON_X = 520;          // центр экрана по X
+  var Y_MIN = 110;          // центр экрана: верхнее положение (экран выше глаз)
+  var Y_MAX = 288;          // нижнее положение
+  var BODY_H = 86, BODY_W = 136, SCREEN_PAD = 8;
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+
+  // угол взгляда в градусах, вниз = положительный
+  function gazeAngle(cy){
+    return Math.atan2(cy - EYE.y, MON_X - EYE.x) * 180 / Math.PI;
+  }
+  // глазная щель, мм (Pansell 2007: -15°→11.1, 0°→9.4, +20°→6.7)
+  function fissureMM(th){
+    var f = th >= 0 ? 9.4 - 0.135*th : 9.4 + 0.1133*(-th);
+    return clamp(f, 6.4, 11.3);
+  }
+  // слёзная плёнка, сек: линейная интерполяция -15°→17.3 … +20°→43.5
+  function tbutSec(th){
+    var t = 17.3 + (th + 15) * (43.5 - 17.3) / 35;
+    return clamp(t, 16, 45);
+  }
+
+  function setMonitor(cy){
+    cy = clamp(cy, Y_MIN, Y_MAX);
+    var top = cy - BODY_H/2;
+    monBody.setAttribute('y', top);
+    monScreen.setAttribute('y', top + SCREEN_PAD);
+    monStand.setAttribute('y', top + BODY_H);
+    monHandle.setAttribute('cy', cy);
+    monArrows.setAttribute('transform', 'translate(0,' + (cy - 243) + ')');
+    gazeLine.setAttribute('x2', MON_X);
+    gazeLine.setAttribute('y2', cy);
+
+    var th = gazeAngle(cy);
+    var f = fissureMM(th);
+    var t = tbutSec(th);
+
+    // большой глаз: 1 мм ≈ 4.6 px по вертикали (ry = f*4.6/2... используем ry = f*2.55)
+    var ry = f * 2.55;
+    aperture.setAttribute('ry', ry);
+    apertureOutline.setAttribute('ry', ry);
+    lashes.setAttribute('transform', 'translate(0,' + (30 - ry) * 0.9 + ')');
+    tearFilm.setAttribute('opacity', (0.10 + (t - 16) / (45 - 16) * 0.22).toFixed(2));
+
+    // веко в профиле: приспускается при взгляде вниз
+    var lidDrop = clamp((f < 9.4 ? (9.4 - f) : 0) * 1.15, 0, 3.4)
+                - clamp((f > 9.4 ? (f - 9.4) : 0) * 0.8, 0, 1.6);
+    profileLid.setAttribute('d',
+      'M188 186 Q200 ' + (180 + lidDrop*1.6) + ' 212 186 L212 ' + (186 + lidDrop) +
+      ' Q200 ' + (181 + lidDrop*1.8) + ' 188 ' + (186 + lidDrop) + ' Z');
+    profilePupil.setAttribute('cy', 192 + clamp(th*0.12, -1.6, 2.2));
+
+    // линия и цвет по зоне
+    var col, txt;
+    if (th < 0){ col = 'var(--bad)'; txt = 'Экран выше глаз: глаз распахнут, слеза сохнет быстрее всего'; }
+    else if (th < 8){ col = 'var(--warn)'; txt = 'Почти: опустите экран ещё чуть ниже'; }
+    else { col = 'var(--good)'; txt = 'Хорошо: веко прикрывает глаз, слеза защищена'; }
+    verdict.style.background = col;
+    verdict.textContent = txt;
+    gazeLine.setAttribute('stroke', th < 0 ? '#B3402E' : (th < 8 ? '#C98A2B' : '#3E7C59'));
+
+    roAngle.textContent = (th >= 0 ? Math.round(th) + '° вниз' : Math.abs(Math.round(th)) + '° вверх');
+    roFissure.textContent = f.toFixed(1).replace('.', ',') + ' мм';
+    roTbut.textContent = '≈' + Math.round(t) + ' с';
+
+    range.value = Math.round((cy - Y_MIN) / (Y_MAX - Y_MIN) * 100);
+    currentY = cy;
+  }
+
+  var currentY = 250;
+
+  // перетаскивание
+  function svgY(evt){
+    var pt = svg.createSVGPoint();
+    pt.x = evt.clientX; pt.y = evt.clientY;
+    var p = pt.matrixTransform(svg.getScreenCTM().inverse());
+    return p.y;
+  }
+  var dragging = false, grabOffset = 0;
+  monitor.addEventListener('pointerdown', function(e){
+    dragging = true; grabOffset = svgY(e) - currentY;
+    monitor.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+  monitor.addEventListener('pointermove', function(e){
+    if(!dragging) return;
+    setMonitor(svgY(e) - grabOffset);
+  });
+  function endDrag(){ dragging = false; }
+  monitor.addEventListener('pointerup', endDrag);
+  monitor.addEventListener('pointercancel', endDrag);
+
+  // слайдер-дубль (доступность + резерв)
+  range.addEventListener('input', function(){
+    setMonitor(Y_MIN + (Y_MAX - Y_MIN) * range.value / 100);
+  });
+
+  // автоморгание большим глазом
+  if(!reduceMotion){
+    setInterval(function(){
+      var ry = parseFloat(aperture.getAttribute('ry'));
+      aperture.setAttribute('ry', 2);
+      apertureOutline.setAttribute('ry', 2);
+      setTimeout(function(){
+        aperture.setAttribute('ry', ry);
+        apertureOutline.setAttribute('ry', ry);
+      }, 130);
+    }, 4200);
+  }
+
+  setMonitor(250); // старт: экран заметно ниже глаз — зелёная зона
+})();
+</script>
+</body>
+</html>
