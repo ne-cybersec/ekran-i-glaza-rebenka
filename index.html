@@ -9,6 +9,13 @@
 <meta property="og:site_name" content="ne_cybersec">
 <meta property="og:title" content="Экран и глаза ребёнка: почему высота монитора решает">
 <meta property="og:description" content="Чаще всего детские глаза сохнут не от яркости, а оттого что экран стоит слишком высоко. Стенд: подвигайте монитор сами.">
+<meta property="og:url" content="https://ne-cybersec.github.io/ekran-i-glaza-rebenka/">
+<meta property="og:image" content="https://ne-cybersec.github.io/ekran-i-glaza-rebenka/boy.jpg">
+<meta property="og:image:width" content="799">
+<meta property="og:image:height" content="1200">
+<meta property="og:image:alt" content="Мальчик перед ноутбуком с усталым взглядом">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ne-cybersec.github.io/ekran-i-glaza-rebenka/boy.jpg">
 <link rel="canonical" href="https://ne-cybersec.github.io/ekran-i-glaza-rebenka/">
 <style>
   :root{
@@ -35,6 +42,19 @@
   }
   .wrap{max-width:760px;margin:0 auto;padding:28px 18px 60px}
   header{padding:26px 0 10px;border-bottom:3px solid var(--ink)}
+  .head-grid{display:flex;gap:22px;align-items:flex-start;margin-top:2px}
+  .htext{flex:1 1 auto;min-width:0}
+  .hero-portrait{
+    flex:0 0 auto;width:200px;max-width:40%;height:auto;display:block;
+    border-radius:12px;border:1px solid var(--line);
+    box-shadow:0 6px 18px rgba(22,50,79,.14);
+  }
+  .hero-cap{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:6px;max-width:200px}
+  @media (max-width:520px){
+    .head-grid{gap:14px}
+    .hero-portrait{width:118px}
+    .hero-cap{display:none}
+  }
   .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
   .brand{
     display:inline-flex;align-items:center;gap:7px;text-decoration:none;
@@ -128,9 +148,17 @@
 
 <header>
   <a class="brand" href="https://t.me/ne_cybersec" target="_blank" rel="noopener"><span class="dot" aria-hidden="true"></span><span>@ne_cybersec</span></a>
-  <div class="kicker">Детская цифровая гигиена</div>
-  <h1>Ребёнок трёт глаза после компьютера? Проверьте высоту экрана</h1>
-  <p class="lead">Не яркость и не «вредное излучение». Чаще всего глаза сохнут из-за того, что экран стоит слишком высоко. Ниже — стенд: подвигайте монитор сами и посмотрите, что делает веко.</p>
+  <div class="head-grid">
+    <div class="htext">
+      <div class="kicker">Детская цифровая гигиена</div>
+      <h1>Ребёнок трёт глаза после компьютера? Проверьте высоту экрана</h1>
+      <p class="lead">Не яркость и не «вредное излучение». Чаще всего глаза сохнут из-за того, что экран стоит слишком высоко. Ниже — стенд: подвигайте монитор сами и посмотрите, что делает веко.</p>
+    </div>
+    <figure style="margin:0">
+      <img class="hero-portrait" src="boy.jpg" width="799" height="1200" alt="Мальчик лежит на полу перед ноутбуком, подперев щёку рукой, с усталым взглядом" loading="eager">
+      <figcaption class="hero-cap">Знакомая поза: экран близко, взгляд вверх, глаза устают</figcaption>
+    </figure>
+  </div>
 </header>
 
 <h2>Веко работает как крышка</h2>
